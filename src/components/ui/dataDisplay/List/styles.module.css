@@ -1,0 +1,9 @@
+.root {
+  @apply flex flex-col w-full;
+}
+.root > li {
+  @apply p-1.5 cursor-pointer text-sm text-black hover:text-white leading-[1.8];
+}
+.root > li:hover {
+  background-color: theme('colors.primary') !important;
+}

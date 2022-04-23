@@ -1,0 +1,15 @@
+.root {
+  @apply flex h-20 w-full px-7 bg-primary border-b-1 border-primary z-10 ;
+}
+.root .header_inner {
+  @apply flex items-center justify-between mx-auto max-w-7xl w-full h-full;
+}
+.root .header_left {
+  @apply flex items-center;
+}
+.root h2 {
+  @apply text-base sm:text-2xl text-light font-bold;
+}
+.root .header_right {
+  @apply flex items-center;
+}

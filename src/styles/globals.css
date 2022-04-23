@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  @apply box-border;
+}
+@layer base {
+  html,
+  body {
+    @apply font-sans m-0 p-0 bg-body dark:bg-dark-body;
+  }
+  body.hidden_scroll {
+    @apply overflow-y-hidden;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  a,
+  button {
+    @apply cursor-pointer;
+  }
+
+  ul {
+    @apply list-none;
+  }
+}

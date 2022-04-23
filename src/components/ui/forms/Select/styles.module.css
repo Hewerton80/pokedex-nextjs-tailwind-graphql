@@ -1,0 +1,19 @@
+.root {
+  @apply text-sm outline-none rounded-sm duration-300 h-[46px] text-[#495057] px-[22px]
+  bg-transparent;
+  border: 1px solid #f3f3f3;
+  transition: 0.3s ease all;
+}
+.root:not(:disabled) {
+  cursor: pointer;
+}
+.root.error {
+  @apply border-danger;
+}
+.root.error:focus {
+  /* prettier-ignore */
+  box-shadow: 0 0 0 0.2rem theme('colors.danger')40;
+}
+.root:not(.error):focus {
+  @apply border-info;
+}

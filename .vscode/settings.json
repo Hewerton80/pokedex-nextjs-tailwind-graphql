@@ -1,0 +1,5 @@
+{
+  "editor.formatOnSave": true,
+  "editor.rulers": [90],
+  "editor.maxTokenizationLineLength": 9000000
+}

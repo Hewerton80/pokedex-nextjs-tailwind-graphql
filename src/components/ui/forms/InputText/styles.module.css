@@ -1,0 +1,16 @@
+.root {
+  @apply h-[46px] py-[14px] px-[22px] text-sm outline-none rounded-sm duration-300 w-full
+  text-[#495057] bg-transparent border-1 border-[#f3f3f3];
+  transition: 0.3s ease all;
+}
+.root.error {
+  @apply border-danger;
+}
+
+.root:not(.error):focus {
+  @apply border-info;
+}
+
+/* .root[type='time']::-webkit-calendar-picker-indicator {
+  background: none;
+} */

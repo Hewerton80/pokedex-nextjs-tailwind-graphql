@@ -1,0 +1,36 @@
+.root {
+  @apply relative flex w-[75px] h-[37px];
+}
+.root svg{
+  @apply absolute z-10 translate-y-1/2 bottom-1/2;
+  fill: theme('colors.warning');
+}
+.root .sun {
+  @apply left-[7px];
+}
+.root .moon {
+  @apply right-[7px];
+}
+.root > input {
+  @apply absolute left-0 top-0 w-full h-full opacity-0 z-20 cursor-pointer;
+}
+.root > input + span {
+  @apply rounded-[50px] absolute left-0 top-0 w-full h-full z-10 bg-black;
+  transition: 0.3s ease all;
+}
+.root > input ~ .cicle {
+  content: '';
+  transition: 0.3s ease all;
+  @apply absolute z-20 h-[31px] w-[31px] rounded-full bg-light left-1 
+  translate-y-1/2 bottom-1/2 cursor-pointer;
+}
+
+.root > input:checked + span {
+  @apply bg-black;
+}
+.root > input:checked ~ .cicle {
+  @apply left-[39px];
+}
+.root + p {
+  @apply text-sm text-dark ml-7;
+}

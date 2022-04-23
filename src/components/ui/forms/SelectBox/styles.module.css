@@ -1,0 +1,32 @@
+.root {
+  @apply relative w-[inherit] h-[inherit];
+}
+.root.error {
+  @apply border-1 border-danger;
+}
+
+.root > span {
+  @apply flex items-center text-sm outline-none rounded-sm duration-300 
+  h-[46px] px-[22px] text-[#495057] border-1 border-[#f3f3f3];
+  transition: 0.3s ease all;
+}
+.root:not(.disabled) > span {
+  @apply cursor-pointer;
+}
+.root > span:focus {
+  @apply border-info;
+}
+.root > div {
+  @apply flex flex-col absolute w-full h-[inherit] bg-white z-50;
+  border: 1px solid #f3f3f3;
+  border-top: 0;
+}
+.root > div > span {
+  @apply p-1;
+}
+.root > div > span input {
+  @apply h-[30px] p-1 text-[13px];
+}
+.root svg {
+  @apply absolute right-1 top-1/2 -translate-y-1/2 text-secondary;
+}

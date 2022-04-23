@@ -1,0 +1,27 @@
+.card {
+  @apply flex flex-col bg-white 
+  rounded-md border-gray-lightest border-1 h-fit;
+}
+
+.card_header {
+  @apply flex items-center justify-between px-7 pt-6;
+}
+
+.card_actions {
+  @apply flex items-center;
+}
+
+.card_body {
+  @apply flex flex-col px-7 py-6;
+}
+
+.card_title {
+  @apply flex;
+}
+.card_title > h4 {
+  @apply font-medium text-black ;
+}
+
+.card_footer {
+  @apply flex px-7 pb-6;
+}

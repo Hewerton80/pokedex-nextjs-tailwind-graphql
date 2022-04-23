@@ -1,0 +1,15 @@
+.root {
+  @apply flex items-center px-5 py-3 h-12 w-full text-[15px] border-1 rounded-[4px];
+}
+.root > svg {
+  @apply text-lg mr-1;
+}
+.root.success {
+  @apply text-success bg-success/20 border-success/10;
+}
+.root.info {
+  @apply text-info bg-info/20 border-info/10;
+}
+.root.danger {
+  @apply text-danger bg-danger/20 border-danger/10;
+}

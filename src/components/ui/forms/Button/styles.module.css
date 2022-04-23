@@ -1,0 +1,166 @@
+.root {
+  @apply flex items-center justify-center text-sm px-6 h-11 w-fit cursor-pointer border-0;
+  border-radius: 3px;
+  transition: 0.3s ease all;
+}
+.root:disabled {
+  @apply cursor-default;
+  opacity: 0.65;
+}
+
+/* primary */
+.root.primary {
+  @apply bg-primary text-white;
+}
+.root.primary:not(:disabled):hover {
+  background-color: #6b3aa3;
+  /* prettier-ignore */
+  box-shadow: 0 2px 2px 0 theme('colors.primary')33,
+    0 3px 1px -2px theme('colors.primary')33, 0 1px 5px 0 theme('colors.primary')33;
+}
+.root.primary:not(:disabled):active {
+  background-color: #6b3aa3;
+}
+.root.primary:not(:disabled):focus,
+.root.primary:not(:disabled):active {
+  /* prettier-ignore */
+  box-shadow: 0 0 0 0.2rem theme('colors.primary')80;
+}
+
+/* success */
+.root.success {
+  @apply bg-success text-white;
+}
+.root.success:not(:disabled):hover {
+  background-color: #188e04;
+  /* prettier-ignore */
+  box-shadow: 0 2px 2px 0 theme('colors.success')33,
+    0 3px 1px -2px theme('colors.success')33, 0 1px 5px 0 theme('colors.success')33;
+}
+.root.success:not(:disabled):active {
+  background-color: #188e04;
+}
+.root.success:not(:disabled):focus,
+.root.success:not(:disabled):active {
+  /* prettier-ignore */
+  box-shadow: 0 0 0 0.2rem theme('colors.success')80;
+}
+
+/* secondary */
+.root.secondary {
+  @apply bg-secondary text-white;
+}
+.root.secondary:not(:disabled):hover {
+  background-color: #565b76;
+  /* prettier-ignore */
+  box-shadow: 0 2px 2px 0 theme('colors.secondary')33,
+    0 3px 1px -2px theme('colors.secondary')33,
+    0 1px 5px 0 theme('colors.secondary')33;
+}
+.root.secondary:not(:disabled):active {
+  background-color: #565b76;
+}
+.root.secondary:not(:disabled):focus,
+.root.secondary:not(:disabled):active {
+  /* prettier-ignore */
+  box-shadow: 0 0 0 0.2rem theme('colors.secondary')80;
+}
+
+/* danger */
+.root.danger {
+  @apply bg-danger text-white;
+}
+.root.danger:not(:disabled):hover {
+  background-color: #bd2130;
+  /* prettier-ignore */
+  box-shadow: 0 2px 2px 0 theme('colors.danger')33,
+    0 3px 1px -2px theme('colors.danger')33, 0 1px 5px 0 theme('colors.danger')33;
+}
+.root.danger:not(:disabled):active {
+  background-color: #bd2130;
+}
+.root.danger:not(:disabled):focus,
+.root.danger:not(:disabled):active {
+  /* prettier-ignore */
+  box-shadow: 0 0 0 0.2rem theme('colors.danger')80;
+}
+
+/* warning */
+.root.warning {
+  @apply bg-warning text-white;
+}
+.root.warning:not(:disabled):hover {
+  background-color: #cb7d0a;
+  /* prettier-ignore */
+  box-shadow: 0 2px 2px 0 theme('colors.warning')33,
+    0 3px 1px -2px theme('colors.warning')33, 0 1px 5px 0 theme('colors.warning')33;
+}
+.root.warning:not(:disabled):active {
+  background-color: #cb7d0a;
+}
+.root.warning:not(:disabled):focus,
+.root.warning:not(:disabled):active {
+  /* prettier-ignore */
+  box-shadow: 0 0 0 0.2rem theme('colors.warning')80;
+}
+
+/* info */
+.root.info {
+  @apply bg-info text-white;
+}
+.root.info:not(:disabled):hover {
+  background-color: #2766a5;
+  /* prettier-ignore */
+  box-shadow: 0 2px 2px 0 theme('colors.info')33,
+    0 3px 1px -2px theme('colors.info')33, 0 1px 5px 0 theme('colors.info')33;
+}
+.root.info:not(:disabled):active {
+  background-color: #2766a5;
+}
+.root.info:not(:disabled):focus,
+.root.info:not(:disabled):active {
+  /* prettier-ignore */
+  box-shadow: 0 0 0 0.2rem theme('colors.info')80;
+}
+
+/* light */
+.root.light {
+  @apply bg-light text-dark;
+}
+.root.light:not(:disabled):hover {
+  background-color: #e2e6ea;
+  /* prettier-ignore */
+  box-shadow: 0 2px 2px 0 theme('colors.light')33,
+    0 3px 1px -2px theme('colors.light')33, 0 1px 5px 0 theme('colors.light')33;
+}
+.root.light:not(:disabled):active {
+  background-color: #e2e6ea;
+}
+.root.light:not(:disabled):focus,
+.root.light:not(:disabled):active {
+  /* prettier-ignore */
+  box-shadow: 0 0 0 0.2rem theme('colors.light')80;
+}
+.root.light > svg {
+  @apply text-dark;
+  color: theme('colors.dark') !important;
+}
+
+/* dark */
+.root.dark {
+  @apply bg-dark text-white;
+}
+.root.dark:not(:disabled):hover {
+  background-color: #13171c;
+  /* prettier-ignore */
+  box-shadow: 0 2px 2px 0 theme('colors.dark')33,
+    0 3px 1px -2px theme('colors.dark')33, 0 1px 5px 0 theme('colors.dark')33;
+}
+.root.dark:not(:disabled):active {
+  background-color: #13171c;
+}
+.root.dark:not(:disabled):focus,
+.root.dark:not(:disabled):active {
+  /* prettier-ignore */
+  box-shadow: 0 0 0 0.2rem theme('colors.dark')80;
+}
