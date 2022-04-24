@@ -11,6 +11,6 @@
   @apply border-info;
 }
 
-/* .root[type='time']::-webkit-calendar-picker-indicator {
-  background: none;
-} */
+.root[type=number]::-webkit-inner-spin-button,.root[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+}

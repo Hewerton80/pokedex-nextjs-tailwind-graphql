@@ -1,4 +1,4 @@
-import { faker } from '@faker-js/faker'
+import { faker } from './faker'
 import { removeFromArray } from './array'
 
 export interface IRowDatas {

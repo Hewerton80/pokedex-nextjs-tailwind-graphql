@@ -15,17 +15,9 @@ import { FaPlus } from 'react-icons/fa'
 import { BsXLg } from 'react-icons/bs'
 import Form from '../components/ui/forms/Form'
 import classNames from 'classnames'
-
-// import ReactJson from 'react-json-view'
-
 const ReactJson = dynamic(() => import('react-json-view'), {
   ssr: false,
 })
-
-// const MonacoEditor = dynamic(() => import('react-monaco-editor'), {
-//   ssr: false,
-//   loading: () => <p>...</p>,
-// })
 
 interface IChangeFieldNameValue {
   index: number
@@ -77,7 +69,7 @@ const Home: NextPage = () => {
     // { fieldName: 'Sobre nome', fieldType: 'Last Name', groupType: 'name' },
   ])
   const [numberRowToGanerate, setNumberRowToGanerate] = useState('10')
-  const [generedfakeDatas, setGeneredfakeDatas] = useState('')
+  const [generedfakeDatas, setGeneredfakeDatas] = useState<any[]>([])
 
   const [isGeneringFakeDatas, setIsGeneringFakeDatas] = useState(false)
 
@@ -132,16 +124,24 @@ const Home: NextPage = () => {
   const handleGenerateFakeDatas = useCallback(
     async (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault()
-      setIsGeneringFakeDatas(true)
-      const response = await generateFateDates({
-        fields: rowDatas,
-        numRows: Number(numberRowToGanerate),
-      })
-      setGeneredfakeDatas(JSON.stringify(response))
-      setIsGeneringFakeDatas(false)
+      try {
+        setIsGeneringFakeDatas(true)
+        const response = await generateFateDates({
+          fields: rowDatas,
+          numRows: Number(numberRowToGanerate),
+        })
+        setGeneredfakeDatas(response)
+      } catch (err) {
+        console.log('err', err)
+      }
     },
     [rowDatas, numberRowToGanerate]
   )
+
+  useEffect(() => {
+    console.log('endSetIsGeneringFakeDatas')
+    setIsGeneringFakeDatas(false)
+  }, [generedfakeDatas])
 
   const rowDataListElement = useMemo(() => {
     return getRange(rowDatas.length).map((_, i) => {
@@ -184,16 +184,13 @@ const Home: NextPage = () => {
   ])
 
   const reactJsonViewElement = useMemo(() => {
+    const showReactJsonViewElement = !isGeneringFakeDatas && generedfakeDatas.length > 0
     return (
-      <div className={classNames(!generedfakeDatas && 'hidden')}>
-        <ReactJson
-          src={generedfakeDatas ? JSON.parse(generedfakeDatas) : {}}
-          theme="monokai"
-          displayDataTypes={false}
-        />
+      <div className={classNames(!showReactJsonViewElement && 'hidden')}>
+        <ReactJson src={generedfakeDatas} theme="monokai" displayDataTypes={false} />
       </div>
     )
-  }, [generedfakeDatas])
+  }, [generedfakeDatas, isGeneringFakeDatas])
 
   return (
     <div className="flex justify-center w-full h-full">
@@ -219,9 +216,10 @@ const Home: NextPage = () => {
                 <FormLabel>Número de dados</FormLabel>
                 <InputText
                   type="number"
-                  min={0}
-                  max={50}
+                  min={1}
+                  max={150}
                   value={numberRowToGanerate}
+                  onWheel={(e) => e.currentTarget.blur()}
                   onChange={(e) => setNumberRowToGanerate(e.target.value)}
                 />
               </FormGroup>

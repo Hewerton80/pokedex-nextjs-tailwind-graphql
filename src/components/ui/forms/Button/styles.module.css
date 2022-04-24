@@ -1,5 +1,7 @@
 .root {
-  @apply flex items-center justify-center text-sm px-6 h-11 w-fit cursor-pointer border-0;
+  @apply flex items-center justify-center text-sm px-6 h-11 w-fit 
+  cursor-pointer border-0 relative;
+
   border-radius: 3px;
   transition: 0.3s ease all;
 }
@@ -164,3 +166,4 @@
   /* prettier-ignore */
   box-shadow: 0 0 0 0.2rem theme('colors.dark')80;
 }
+
