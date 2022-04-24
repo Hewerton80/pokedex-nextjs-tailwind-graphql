@@ -5,7 +5,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 Free Resources for Generating Realistic Fake Data. <a href="https://fake-generator.vercel.app/" target="_blank" rel="noopener noreferrer">See demo</a>
 
 <p align="center">
-<img src='https://user-images.githubusercontent.com/37268237/110219011-8321e780-7e9b-11eb-9138-065fb96003e8.gif' width="220"/>
+  <img src='https://user-images.githubusercontent.com/37268237/164992509-31355991-af5c-4306-afdb-6b697e035019.gif'/>
 </p>
 
 ## Technologies 💻
