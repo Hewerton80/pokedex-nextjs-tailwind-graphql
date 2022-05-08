@@ -1,6 +1,7 @@
 .card {
-  @apply flex flex-col bg-white 
-  rounded-md border-gray-lightest border-1 h-fit;
+  @apply flex flex-col bg-white relative;
+  /* prettier-ignore */
+  box-shadow: 0 1px 5px theme('colors.black')10;
 }
 
 .card_header {

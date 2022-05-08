@@ -7,8 +7,9 @@
     "2xl": 1536
   },
   "colors": {
-    "body": "#f3f4f9",
+    "body": "#e5e5e5",
     "transparent": "transparent",
+    "blue-typography": "#4078c0",
     "dark-body": "#1a1a3c",
     "dark-card": "#2a2a4a",
     "primary": "#844fc1",
@@ -17,7 +18,6 @@
     "danger": "#dc3545",
     "warning": "#f39915",
     "info": "#3b86d1",
-    "dark": "#282f3a",
     "light": "#dedefd",
     "muted": "#a5abcc",
     "white": "#ffffff",
@@ -25,9 +25,29 @@
     "gray": "#76838f",
     "gray-light": "#eaeaf1",
     "gray-lighter": "#f7f8fc",
-    "gray-lightest": "#e4e4f4"
+    "gray-lightest": "#e4e4f4",
+    "normal": "linear-gradient(rgb(164, 172, 175) 50%, rgb(164, 172, 175) 50%)",
+    "fighting": "linear-gradient(rgb(213, 103, 35) 50%, rgb(213, 103, 35) 50%)",
+    "flying": "linear-gradient(rgb(61, 199, 239) 50%, rgb(189, 185, 184) 50%)",
+    "poison": "linear-gradient(rgb(185, 127, 201) 50%, rgb(185, 127, 201) 50%)",
+    "ground": "linear-gradient(rgb(247, 222, 63) 50%, rgb(171, 152, 66) 50%)",
+    "rock": "linear-gradient(rgb(163, 140, 33) 50%, rgb(163, 140, 33) 50%)",
+    "bug": "linear-gradient(rgb(114, 159, 6) 50%, rgb(114, 159, 6) 50%)",
+    "ghost": "linear-gradient(rgb(123, 98, 163) 50%, rgb(123, 98, 163) 50%)",
+    "steel": "linear-gradient(rgb(158, 183, 184) 50%, rgb(158, 183, 184) 50%)",
+    "fire": "linear-gradient(rgb(253, 125, 3) 50%, rgb(253, 125, 3) 50%)",
+    "water": "linear-gradient(rgb(69, 146, 196) 50%, rgb(69, 146, 196) 50%)",
+    "grass": "linear-gradient(rgb(155, 204, 80) 50%, rgb(155, 204, 80) 50%)",
+    "electric": "linear-gradient(rgb(238, 213, 53) 50%, rgb(238, 213, 53) 50%)",
+    "psychic": "linear-gradient(rgb(243, 102, 185) 50%, rgb(243, 102, 185) 50%)",
+    "ice": "linear-gradient(rgb(81, 196, 231) 50%, rgb(81, 196, 231) 50%)",
+    "dragon": "linear-gradient(rgb(83, 164, 207) 50%, rgb(241, 110, 8) 50%)",
+    "dark": "linear-gradient(rgb(112, 112, 112) 50%, rgb(112, 112, 112) 50%)",
+    "fairy": "linear-gradient(rgb(253, 185, 233) 50%, rgb(253, 185, 233) 50%)",
+    "uncknow": "linear-gradient(rgb(204, 204, 204) 50%, rgb(204, 204, 204) 50%)",
+    "shadow": "linear-gradient(rgb(10, 13, 103) 50%, rgb(10, 13, 103) 50%)"
   },
   "fontFamily": {
-    "sans": "Poppins, Arial, sans-serif"
+    "sans": "Roboto, Arial, sans-serif"
   }
 }

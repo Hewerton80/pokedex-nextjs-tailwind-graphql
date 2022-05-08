@@ -1,0 +1,24 @@
+.root{
+  @apply px-2.5 py-2.5 relative min-h-[112px] overflow-hidden;
+}
+
+.root .id {
+  @apply absolute top-1 right-2 text-gray text-xs;
+}
+
+.root .title {
+  @apply text-blue-typography text-lg first-letter:uppercase;
+}
+
+.root .img-wrapper {
+  @apply flex w-28 h-28 absolute right-0  top-0;
+}
+.root .img-wrapper :global(.shimmer) {
+  @apply w-16 h-16  m-auto;
+}
+.root .pokemon-types {
+  @apply flex flex-wrap space-x-1 mt-auto;
+}
+.root .pokemon-types :global(.shimmer){
+  @apply h-7 max-w-[48px] rounded-[3px];
+}

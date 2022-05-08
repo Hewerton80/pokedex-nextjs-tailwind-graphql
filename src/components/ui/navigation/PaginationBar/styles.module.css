@@ -1,0 +1,28 @@
+.root {
+  @apply flex items-start justify-between w-full;
+}
+
+.root > span {
+  @apply text-sm  text-black;
+}
+
+.root > ul {
+  @apply flex;
+}
+
+.root > ul li button {
+  @apply border-1 border-gray-lightest rounded-none w-8 h-9 px-0;
+  background-color: theme('colors.white') !important;
+  color: theme('colors.black') !important;
+  box-shadow: none !important;
+}
+.root > ul li button:hover {
+  border-color: theme('colors.gray-lightest') !important;
+  background-color: #f4f5fa !important;
+}
+
+.root > ul li.active button {
+  border-color: theme('colors.primary') !important;
+  background-color: theme('colors.primary') !important;
+  color: theme('colors.white') !important;
+}

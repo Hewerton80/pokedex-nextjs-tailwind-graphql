@@ -1,0 +1,13 @@
+.root {
+  @apply h-14 px-5 text-[22px] outline-none rounded-[28px] w-full
+  text-[#444] bg-white border-1 border-[#f3f3f3] text-center;
+  transition: 0.3s ease all;
+  box-shadow: 0 1px 5px theme('colors.black')10;
+}
+.root.error {
+  @apply border-danger;
+}
+
+.root:not(.error):focus {
+  @apply border-info;
+}

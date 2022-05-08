@@ -35,7 +35,7 @@ function Header({ className, ...rest }: HeaderProps) {
     >
       <div className={styles.header_inner}>
         <div className={styles.header_left}>
-          <h2>Gerador de dados fakes</h2>
+          <h2>Pokedex</h2>
         </div>
         <div className={styles.header_right}>
           <ThemeSwitch

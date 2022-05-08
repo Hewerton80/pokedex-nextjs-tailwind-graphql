@@ -1,233 +1,208 @@
 import type { NextPage } from 'next'
-import dynamic from 'next/dynamic'
-import { useState, useCallback, useMemo, ChangeEvent, useEffect, FormEvent } from 'react'
-import FormGroup from '../components/ui/forms/FormGroup'
-import FormLabel from '../components/ui/forms/FormLabel'
-import InputText from '../components/ui/forms/InputText'
-import Select from '../components/ui/forms/Select'
-import { Card, CardBody, CardHeader, CardTitle } from '../components/ui/layout/Card'
+import { useRouter } from 'next/router'
+import { ChangeEvent, Fragment, useCallback, useEffect, useMemo, useState } from 'react'
+import PokemonTypeBadge from '../components/ui/dataDisplay/PokemonTypeBadge'
+import InputSearchPokemon from '../components/ui/forms/InputSearchPokemon'
+import { Card } from '../components/ui/layout/Card'
+import PokemonCard from '../components/ui/layout/PokemonCard'
+import PaginationBar from '../components/ui/navigation/PaginationBar'
+import usePokemon, { IpokemonFilter } from '../hooks/usePokemon'
+import { IPokemonType, PokemonTypeNameEnum } from '../types/PokemonType'
 import { getRange } from '../utils/getRange'
-import { AvailableGroupTypes, fieldTypeOptios, IRowDatas } from '../utils/fieldTypeOptios'
-import Button from '../components/ui/forms/Button'
-import { generateFateDates } from '../utils/generateFateDates'
-import IconButton from '../components/ui/forms/IconButton'
-import { FaPlus } from 'react-icons/fa'
-import { BsXLg } from 'react-icons/bs'
-import Form from '../components/ui/forms/Form'
+import { useDebouncedCallback } from 'use-debounce'
 import classNames from 'classnames'
-const ReactJson = dynamic(() => import('react-json-view'), {
-  ssr: false,
-})
 
-interface IChangeFieldNameValue {
-  index: number
-  value: string
-}
-
-interface IChangeFieldTypeValue {
-  index: number
-  e: ChangeEvent<HTMLSelectElement>
+interface IFilterTypes {
+  type: keyof typeof PokemonTypeNameEnum
+  isChecked: boolean
 }
 
 const Home: NextPage = () => {
-  const [rowDatas, setRowDatas] = useState<IRowDatas[]>([
-    {
-      fieldName: 'id',
-      fieldType: 'uuid',
-      groupType: 'datatype',
-    },
-    {
-      fieldName: 'user-name',
-      fieldType: 'findName',
-      groupType: 'name',
-    },
-    {
-      fieldName: 'avatar',
-      fieldType: 'avatar',
-      groupType: 'image',
-    },
-    {
-      fieldName: 'gender',
-      fieldType: 'gender',
-      groupType: 'name',
-    },
-    {
-      fieldName: 'phone-number',
-      fieldType: 'phoneNumber',
-      groupType: 'phone',
-    },
-    {
-      fieldName: 'zip-code',
-      fieldType: 'zipCode',
-      groupType: 'address',
-    },
-    {
-      fieldName: 'birth-date',
-      fieldType: 'past',
-      groupType: 'date',
-    },
-    // { fieldName: 'Sobre nome', fieldType: 'Last Name', groupType: 'name' },
-  ])
-  const [numberRowToGanerate, setNumberRowToGanerate] = useState('10')
-  const [generedfakeDatas, setGeneredfakeDatas] = useState<any[]>([])
+  const { pokemons, isLoading, getPokemons } = usePokemon()
 
-  const [isGeneringFakeDatas, setIsGeneringFakeDatas] = useState(false)
+  const router = useRouter()
 
-  const selectOptions = useMemo(
-    () =>
-      fieldTypeOptios.map((option, i) => (
-        <optgroup className="text-dark" key={option.type + i} label={option.type}>
-          {option.subtypes.map((subtype, j) => (
-            <option className="text-dark" key={subtype + i + j} value={subtype}>
-              {subtype}
-            </option>
-          ))}
-        </optgroup>
-      )),
-    []
-  )
+  const [inputSearchPokemonValue, setInputSearchPokemonValue] = useState('')
+  const [pokemonTypeFilter, setPokemonTypeFilter] = useState<
+    keyof typeof PokemonTypeNameEnum | undefined
+  >(undefined)
 
-  const handleChangeFieldName = useCallback(({ index, value }: IChangeFieldNameValue) => {
-    setRowDatas(([...currentRowDatas]) => {
-      currentRowDatas[index].fieldName = value
-      return currentRowDatas
-    })
-  }, [])
+  const [page, setPage] = useState(1)
+  const [totalDocs, setTotalDocs] = useState(0)
+  const [docsPerPage] = useState(48)
+  const [totalPages, setTotalPages] = useState(0)
 
-  const handleChangeFieldType = useCallback(({ index, e }: IChangeFieldTypeValue) => {
-    setRowDatas(([...currentRowDatas]) => {
-      const indexElement = e.target.selectedIndex
-      const option = e.target.options[indexElement]
-      const optgroup = option.parentElement
-      const groupType = optgroup?.getAttribute('label')
-      currentRowDatas[index].fieldType = e.target.value
-      currentRowDatas[index].groupType = groupType as AvailableGroupTypes
-      return currentRowDatas
-    })
-  }, [])
-
-  const handleAddRow = useCallback(() => {
-    setRowDatas(([...currentRowDatas]) => {
-      const lastRowDate = currentRowDatas[currentRowDatas.length - 1]
-      currentRowDatas.push({ ...lastRowDate })
-      return currentRowDatas
-    })
-  }, [])
-
-  const handleRemoveRowByIndex = useCallback((index: number) => {
-    setRowDatas(([...currentRowDatas]) => {
-      currentRowDatas.splice(index, 1)
-      return currentRowDatas
-    })
-  }, [])
-
-  const handleGenerateFakeDatas = useCallback(
-    async (e: FormEvent<HTMLFormElement>) => {
-      e.preventDefault()
-      try {
-        setIsGeneringFakeDatas(true)
-        const response = await generateFateDates({
-          fields: rowDatas,
-          numRows: Number(numberRowToGanerate),
-        })
-        setGeneredfakeDatas(response)
-      } catch (err) {
-        console.log('err', err)
-      }
-    },
-    [rowDatas, numberRowToGanerate]
+  const [filterTypes, setFilterTypes] = useState<IFilterTypes[]>(
+    Object.keys(PokemonTypeNameEnum).map((type) => ({
+      type: type as keyof typeof PokemonTypeNameEnum,
+      isChecked: false,
+    }))
   )
 
   useEffect(() => {
-    console.log('endSetIsGeneringFakeDatas')
-    setIsGeneringFakeDatas(false)
-  }, [generedfakeDatas])
+    if (Object.keys(pokemons).length > 0) {
+      setTotalDocs(pokemons.totalDocs)
+      setTotalPages(pokemons.totalPages)
+    }
+  }, [pokemons])
 
-  const rowDataListElement = useMemo(() => {
-    return getRange(rowDatas.length).map((_, i) => {
-      const isFirstIndex = i === 0
-      return (
-        <div className="flex items-center space-x-2" key={i + 'row'}>
-          <FormGroup className="max-w-[240px] w-full">
-            <InputText
-              value={rowDatas[i].fieldName}
-              required
-              onChange={(e) => handleChangeFieldName({ index: i, value: e.target.value })}
-              autoFocus
-            />
-          </FormGroup>
-          <FormGroup className="max-w-[240px] w-full">
-            <Select
-              value={rowDatas[i].fieldType}
-              onChange={(e) => handleChangeFieldType({ index: i, e })}
-              required
-            >
-              {selectOptions}
-            </Select>
-          </FormGroup>
-          {!isFirstIndex && (
-            <IconButton
-              variant="danger"
-              icon={<BsXLg />}
-              onClick={() => handleRemoveRowByIndex(i)}
-            />
-          )}
-        </div>
-      )
-    })
-  }, [
-    rowDatas,
-    selectOptions,
-    handleRemoveRowByIndex,
-    handleChangeFieldName,
-    handleChangeFieldType,
-  ])
+  const getPokemonssFilterFromRouter = useCallback(() => {
+    const { name, currentPage, type } = router.query as IpokemonFilter
+    return {
+      name: name ? name.trim() : '',
+      currentPage: currentPage ? Number(currentPage) : 1,
+      type: type ? (type.trim() as keyof typeof PokemonTypeNameEnum) : undefined,
+    }
+  }, [router])
 
-  const reactJsonViewElement = useMemo(() => {
-    const showReactJsonViewElement = !isGeneringFakeDatas && generedfakeDatas.length > 0
-    return (
-      <div className={classNames(!showReactJsonViewElement && 'hidden')}>
-        <ReactJson src={generedfakeDatas} theme="monokai" displayDataTypes={false} />
-      </div>
-    )
-  }, [generedfakeDatas, isGeneringFakeDatas])
+  useEffect(() => {
+    if (router.isReady) {
+      const { name, currentPage, type } = getPokemonssFilterFromRouter()
+      setInputSearchPokemonValue(name)
+      setPokemonTypeFilter(type)
+      getPokemons({ currentPage, name, type })
+    }
+  }, [router, getPokemons, getPokemonssFilterFromRouter])
+
+  // useEffect(() => {
+  //   setFilterdPokemons(pokemons)
+  // }, [pokemons])
+
+  // useEffect(() => {
+  //   if (inputSearchPokemonToFilter.trim()) {
+  //     const filterdPokemons = pokemons?.docs?.filter((pokemon) =>
+  //       pokemon?.name?.toLowerCase()?.includes(inputSearchPokemonToFilter?.toLowerCase())
+  //     )
+  //     setFilterdPokemons(filterdPokemons)
+  //   } else {
+  //     setFilterdPokemons(pokemons)
+  //   }
+  // }, [pokemons, inputSearchPokemonToFilter])
+
+  // useEffect(() => {
+  //   if (someOneTypeIsChecked) {
+  //   } else {
+  //     setFilterdPokemons(pokemons)
+  //   }
+  // }, [someOneTypeIsChecked])
+
+  useEffect(() => {
+    if (pokemonTypeFilter) {
+      setFilterTypes(([...currentFilterTypes]) => {
+        return currentFilterTypes.map((currentFilterType) => ({
+          ...currentFilterType,
+          isChecked: currentFilterType.type === pokemonTypeFilter,
+        }))
+      })
+    } else {
+      setFilterTypes(([...currentFilterTypes]) => {
+        return currentFilterTypes.map((currentFilterType) => ({
+          ...currentFilterType,
+          isChecked: false,
+        }))
+      })
+    }
+  }, [pokemonTypeFilter])
+
+  const handleChangePage = useCallback(
+    (toPage: number) => {
+      setPage(toPage)
+      router.push({ pathname: '/', query: { ...router.query, currentPage: toPage } })
+    },
+    [router]
+  )
+
+  const handleCheckPokemonType = useCallback(
+    (pokemonType: keyof typeof PokemonTypeNameEnum) => {
+      let podekemonTypeTmp = undefined
+      if (pokemonType !== pokemonTypeFilter) {
+        setPokemonTypeFilter(pokemonType)
+        podekemonTypeTmp = pokemonType
+      } else {
+        setPokemonTypeFilter(undefined)
+      }
+      setPage(1)
+      router.push({
+        pathname: '/',
+        query: { ...router.query, type: podekemonTypeTmp, currentPage: 1 },
+      })
+    },
+    [pokemonTypeFilter, router]
+  )
+
+  const handleChangeInputSearchPokemon = useDebouncedCallback(
+    useCallback(
+      (e: ChangeEvent<HTMLInputElement>) => {
+        setInputSearchPokemonValue(e.target.value)
+        setPage(1)
+        router.push({
+          pathname: '/',
+          query: { ...router.query, name: e.target.value, currentPage: 1 },
+        })
+      },
+      [router]
+    ),
+    1000
+  )
+
+  const someOneTypeIsChecked = useMemo(
+    () => filterTypes.some((t) => t.isChecked),
+    [filterTypes]
+  )
+
+  const podekemonsListElement = useMemo(() => {
+    return pokemons?.docs?.map((pokemon, i) => (
+      <Fragment key={String(pokemon?.id) + i}>
+        <PokemonCard className="col-span-4" pokemon={pokemon} />
+      </Fragment>
+    ))
+  }, [pokemons])
 
   return (
-    <div className="flex justify-center w-full h-full">
-      <Card className="max-w-7xl w-full mb-16">
-        <CardHeader>
-          <CardTitle>Gerador de dados fakes</CardTitle>
-        </CardHeader>
-        <CardBody>
-          <Form className="mb-4" onSubmit={handleGenerateFakeDatas}>
-            <div className="flex flex-col space-y-2 mb-12">
-              <div className="flex items-end space-x-2">
-                <FormLabel className="max-w-[240px] w-full">Nome do Campo</FormLabel>
-                <FormLabel className="max-w-[240px] w-full">Tipo do Campo</FormLabel>
-              </div>
-              {rowDataListElement}
-              <IconButton variant="primary" icon={<FaPlus />} onClick={handleAddRow} />
-            </div>
-            <div className="flex items-end space-x-4">
-              <Button variant="primary" type="submit" isLoading={isGeneringFakeDatas}>
-                Gerar dados fakes
-              </Button>
-              <FormGroup className="max-w-[240px] w-full">
-                <FormLabel>Número de dados</FormLabel>
-                <InputText
-                  type="number"
-                  min={1}
-                  max={150}
-                  value={numberRowToGanerate}
-                  onWheel={(e) => e.currentTarget.blur()}
-                  onChange={(e) => setNumberRowToGanerate(e.target.value)}
-                />
-              </FormGroup>
-            </div>
-          </Form>
-          {reactJsonViewElement}
-        </CardBody>
+    <div className="flex flex-col max-w-4xl w-full mx-auto mb-9">
+      <InputSearchPokemon
+        className="mb-9"
+        value={inputSearchPokemonValue}
+        onChange={(e) => {
+          handleChangeInputSearchPokemon(e)
+          setInputSearchPokemonValue(e.target.value)
+        }}
+      />
+      <Card className="flex-row flex-wrap -mt-2 pb-2 mb-9">
+        {filterTypes.map((filterType) => (
+          <PokemonTypeBadge
+            className={classNames(
+              'ml-2 mt-2 outline-black dark:outline-white',
+              someOneTypeIsChecked &&
+                (filterType.isChecked ? 'outline outline-2' : 'opacity-40')
+            )}
+            key={filterType.type}
+            type={filterType.type}
+            onClick={() => handleCheckPokemonType(filterType.type)}
+          />
+        ))}
       </Card>
+      <div className="grid grid-cols-12 gap-2 mb-9">
+        {isLoading || handleChangeInputSearchPokemon.isPending()
+          ? getRange(48).map((i) => (
+              <Fragment key={'is-loading' + i}>
+                <PokemonCard className="col-span-4" isLoading />
+              </Fragment>
+            ))
+          : podekemonsListElement}
+      </div>
+      <div className="flex w-full">
+        {
+          <PaginationBar
+            currentPage={page}
+            onChangePage={handleChangePage}
+            perPage={docsPerPage}
+            totalPages={totalPages}
+            totalRecords={totalDocs}
+            disabled={isLoading || handleChangeInputSearchPokemon.isPending()}
+          />
+        }
+      </div>
     </div>
   )
 }

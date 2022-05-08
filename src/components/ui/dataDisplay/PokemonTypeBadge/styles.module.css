@@ -1,0 +1,69 @@
+.root {
+  @apply flex items-center justify-center w-fit  py-1.5 px-2
+  border-0 border-transparent rounded-[3px] first-letter:uppercase
+  text-xs text-white font-bold cursor-pointer;
+  
+  /* prettier-ignore */
+  text-shadow: 0 1px 1px theme('colors.black')80;
+}
+
+.root.normal {
+   background: theme("colors.normal");
+}
+.root.fighting {
+   background: theme("colors.fighting");
+}
+.root.flying {
+   background: theme("colors.flying");
+}
+.root.poison {
+   background: theme("colors.poison");
+}
+.root.ground {
+   background: theme("colors.ground");
+}
+.root.rock {
+   background: theme("colors.rock");
+}
+.root.bug {
+   background: theme("colors.bug");
+}
+.root.ghost {
+   background: theme("colors.ghost");
+}
+.root.steel {
+   background: theme("colors.steel");
+}
+.root.fire {
+   background: theme("colors.fire");
+}
+.root.water {
+   background: theme("colors.water");
+}
+.root.grass {
+   background: theme("colors.grass");
+}
+.root.electric {
+   background: theme("colors.electric");
+}
+.root.psychic {
+   background: theme("colors.psychic");
+}
+.root.ice {
+   background: theme("colors.ice");
+}
+.root.dragon {
+   background: theme("colors.dragon");
+}
+.root.dark {
+   background: theme("colors.dark");
+}
+.root.fairy {
+   background: theme("colors.fairy");
+}
+.root.uncknow {
+   background: theme("colors.uncknow");
+}
+.root.shadow {
+   background: theme("colors.shadow");
+}
