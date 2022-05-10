@@ -1,0 +1,25 @@
+.root {
+  @apply flex;
+}
+.root ul {
+  @apply flex w-full justify-evenly;
+}
+.root ul li {
+  @apply flex items-center cursor-pointer;
+}
+.root ul li:hover p {
+  @apply underline;
+}
+.root ul li p {
+  @apply font-bold text-sm text-blue-typography;
+}
+.root ul svg {
+  @apply text-blue-typography;
+}
+.panel {
+  @apply flex flex-row flex-wrap justify-center -ml-2
+}
+
+.panel :global(.pokemon-badge) {
+  @apply ml-2 mt-2 
+}

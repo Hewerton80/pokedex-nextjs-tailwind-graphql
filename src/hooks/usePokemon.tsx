@@ -2,7 +2,8 @@ import { useCallback, useState } from 'react'
 import { getPokemonGql } from '../queriesGql/getPokemonsGql'
 import { apolloClient } from '../services/apolloClient'
 import { IPokemon } from '../types/Pokemon'
-import { IPokemonType, PokemonTypeNameEnum } from '../types/PokemonType'
+import { PokemonGenerationName } from '../types/PokemonGeneration'
+import { IPokemonType, PokemonTypeName } from '../types/PokemonType'
 import { getPaginedDocs, IPaginedDocs } from '../utils/getPaginedDocs'
 
 type PokemonRecords = IPaginedDocs<IPokemon>
@@ -10,7 +11,8 @@ type PokemonRecords = IPaginedDocs<IPokemon>
 export interface IpokemonFilter extends IPokemon {
   currentPage?: number
   perPage?: number
-  type?: keyof typeof PokemonTypeNameEnum
+  type?: PokemonTypeName
+  generationName?: PokemonGenerationName
 }
 
 function usePokemon() {

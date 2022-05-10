@@ -1,19 +1,29 @@
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { ChangeEvent, Fragment, useCallback, useEffect, useMemo, useState } from 'react'
-import PokemonTypeBadge from '../components/ui/dataDisplay/PokemonTypeBadge'
+import PokemonBadge from '../components/ui/dataDisplay/PokemonBadge'
 import InputSearchPokemon from '../components/ui/forms/InputSearchPokemon'
 import { Card } from '../components/ui/layout/Card'
 import PokemonCard from '../components/ui/layout/PokemonCard'
 import PaginationBar from '../components/ui/navigation/PaginationBar'
 import usePokemon, { IpokemonFilter } from '../hooks/usePokemon'
-import { IPokemonType, PokemonTypeNameEnum } from '../types/PokemonType'
+import { PokemonTypeName, PokemonTypeNameEnum } from '../types/PokemonType'
 import { getRange } from '../utils/getRange'
 import { useDebouncedCallback } from 'use-debounce'
 import classNames from 'classnames'
+import { TabItem, TabList, TabPanel } from '../components/ui/navigation/Tab'
+import {
+  PokemonGenerationName,
+  PokemonGenerationNameEnum,
+} from '../types/PokemonGeneration'
 
 interface IFilterTypes {
-  type: keyof typeof PokemonTypeNameEnum
+  type: PokemonTypeName
+  isChecked: boolean
+}
+
+interface IFilterGenerations {
+  generation: PokemonGenerationName
   isChecked: boolean
 }
 
@@ -23,8 +33,11 @@ const Home: NextPage = () => {
   const router = useRouter()
 
   const [inputSearchPokemonValue, setInputSearchPokemonValue] = useState('')
-  const [pokemonTypeFilter, setPokemonTypeFilter] = useState<
-    keyof typeof PokemonTypeNameEnum | undefined
+  const [selectedPokemonTypeFilter, setSeletedPokemonTypeFilter] = useState<
+    PokemonTypeName | undefined
+  >(undefined)
+  const [selectedPokemonGenerationFilter, setSeletedPokemonGenerationFilter] = useState<
+    PokemonGenerationName | undefined
   >(undefined)
 
   const [page, setPage] = useState(1)
@@ -32,9 +45,19 @@ const Home: NextPage = () => {
   const [docsPerPage] = useState(48)
   const [totalPages, setTotalPages] = useState(0)
 
+  const [showFilterTypes, setShowFilterTypes] = useState(false)
+  const [showFilterGenerations, setShowFilterGenerations] = useState(false)
+
   const [filterTypes, setFilterTypes] = useState<IFilterTypes[]>(
     Object.keys(PokemonTypeNameEnum).map((type) => ({
-      type: type as keyof typeof PokemonTypeNameEnum,
+      type: type as PokemonTypeName,
+      isChecked: false,
+    }))
+  )
+
+  const [filterGenerations, setFilterGenerations] = useState<IFilterGenerations[]>(
+    Object.keys(PokemonGenerationNameEnum).map((generation) => ({
+      generation: generation as PokemonGenerationName,
       isChecked: false,
     }))
   )
@@ -47,51 +70,34 @@ const Home: NextPage = () => {
   }, [pokemons])
 
   const getPokemonssFilterFromRouter = useCallback(() => {
-    const { name, currentPage, type } = router.query as IpokemonFilter
+    const { name, currentPage, type, generationName } = router.query as IpokemonFilter
     return {
       name: name ? name.trim() : '',
       currentPage: currentPage ? Number(currentPage) : 1,
-      type: type ? (type.trim() as keyof typeof PokemonTypeNameEnum) : undefined,
+      type: type ? (type.trim() as PokemonTypeName) : undefined,
+      generationName: generationName
+        ? (generationName.trim() as PokemonGenerationName)
+        : undefined,
     }
   }, [router])
 
   useEffect(() => {
     if (router.isReady) {
-      const { name, currentPage, type } = getPokemonssFilterFromRouter()
+      const { name, currentPage, type, generationName } = getPokemonssFilterFromRouter()
       setInputSearchPokemonValue(name)
-      setPokemonTypeFilter(type)
-      getPokemons({ currentPage, name, type })
+      setSeletedPokemonTypeFilter(type)
+      setSeletedPokemonGenerationFilter(generationName)
+      console.log('generationName', generationName)
+      getPokemons({ currentPage, name, type, generationName })
     }
   }, [router, getPokemons, getPokemonssFilterFromRouter])
 
-  // useEffect(() => {
-  //   setFilterdPokemons(pokemons)
-  // }, [pokemons])
-
-  // useEffect(() => {
-  //   if (inputSearchPokemonToFilter.trim()) {
-  //     const filterdPokemons = pokemons?.docs?.filter((pokemon) =>
-  //       pokemon?.name?.toLowerCase()?.includes(inputSearchPokemonToFilter?.toLowerCase())
-  //     )
-  //     setFilterdPokemons(filterdPokemons)
-  //   } else {
-  //     setFilterdPokemons(pokemons)
-  //   }
-  // }, [pokemons, inputSearchPokemonToFilter])
-
-  // useEffect(() => {
-  //   if (someOneTypeIsChecked) {
-  //   } else {
-  //     setFilterdPokemons(pokemons)
-  //   }
-  // }, [someOneTypeIsChecked])
-
   useEffect(() => {
-    if (pokemonTypeFilter) {
+    if (selectedPokemonTypeFilter) {
       setFilterTypes(([...currentFilterTypes]) => {
         return currentFilterTypes.map((currentFilterType) => ({
           ...currentFilterType,
-          isChecked: currentFilterType.type === pokemonTypeFilter,
+          isChecked: currentFilterType.type === selectedPokemonTypeFilter,
         }))
       })
     } else {
@@ -102,7 +108,26 @@ const Home: NextPage = () => {
         }))
       })
     }
-  }, [pokemonTypeFilter])
+  }, [selectedPokemonTypeFilter])
+
+  useEffect(() => {
+    if (selectedPokemonGenerationFilter) {
+      setFilterGenerations(([...currentFilterGenerations]) => {
+        return currentFilterGenerations.map((currentFilterGeneration) => ({
+          ...currentFilterGeneration,
+          isChecked:
+            currentFilterGeneration.generation === selectedPokemonGenerationFilter,
+        }))
+      })
+    } else {
+      setFilterGenerations(([...currentFilterGenerations]) => {
+        return currentFilterGenerations.map((currentFilterGeneration) => ({
+          ...currentFilterGeneration,
+          isChecked: false,
+        }))
+      })
+    }
+  }, [selectedPokemonGenerationFilter])
 
   const handleChangePage = useCallback(
     (toPage: number) => {
@@ -113,13 +138,13 @@ const Home: NextPage = () => {
   )
 
   const handleCheckPokemonType = useCallback(
-    (pokemonType: keyof typeof PokemonTypeNameEnum) => {
+    (pokemonType: PokemonTypeName) => {
       let podekemonTypeTmp = undefined
-      if (pokemonType !== pokemonTypeFilter) {
-        setPokemonTypeFilter(pokemonType)
+      if (pokemonType !== selectedPokemonTypeFilter) {
+        setSeletedPokemonTypeFilter(pokemonType)
         podekemonTypeTmp = pokemonType
       } else {
-        setPokemonTypeFilter(undefined)
+        setSeletedPokemonTypeFilter(undefined)
       }
       setPage(1)
       router.push({
@@ -127,7 +152,29 @@ const Home: NextPage = () => {
         query: { ...router.query, type: podekemonTypeTmp, currentPage: 1 },
       })
     },
-    [pokemonTypeFilter, router]
+    [selectedPokemonTypeFilter, router]
+  )
+
+  const handleCheckPokemonGeneration = useCallback(
+    (pokemonGeneration: PokemonGenerationName) => {
+      let podekemonGenerationTmp = undefined
+      if (pokemonGeneration !== selectedPokemonGenerationFilter) {
+        setSeletedPokemonGenerationFilter(pokemonGeneration)
+        podekemonGenerationTmp = pokemonGeneration
+      } else {
+        setSeletedPokemonGenerationFilter(undefined)
+      }
+      setPage(1)
+      router.push({
+        pathname: '/',
+        query: {
+          ...router.query,
+          generationName: podekemonGenerationTmp,
+          currentPage: 1,
+        },
+      })
+    },
+    [selectedPokemonGenerationFilter, router]
   )
 
   const handleChangeInputSearchPokemon = useDebouncedCallback(
@@ -150,6 +197,11 @@ const Home: NextPage = () => {
     [filterTypes]
   )
 
+  const someOneGenerationIsChecked = useMemo(
+    () => filterGenerations.some((t) => t.isChecked),
+    [filterGenerations]
+  )
+
   const podekemonsListElement = useMemo(() => {
     return pokemons?.docs?.map((pokemon, i) => (
       <Fragment key={String(pokemon?.id) + i}>
@@ -168,19 +220,51 @@ const Home: NextPage = () => {
           setInputSearchPokemonValue(e.target.value)
         }}
       />
-      <Card className="flex-row flex-wrap -mt-2 pb-2 mb-9">
-        {filterTypes.map((filterType) => (
-          <PokemonTypeBadge
-            className={classNames(
-              'ml-2 mt-2 outline-black dark:outline-white',
-              someOneTypeIsChecked &&
-                (filterType.isChecked ? 'outline outline-2' : 'opacity-40')
-            )}
-            key={filterType.type}
-            type={filterType.type}
-            onClick={() => handleCheckPokemonType(filterType.type)}
-          />
-        ))}
+      <Card className="flex flex-col mb-9 p-2">
+        <TabList>
+          <TabItem
+            isActive={showFilterTypes}
+            onClick={() => setShowFilterTypes(!showFilterTypes)}
+          >
+            Type
+          </TabItem>
+          <TabItem
+            isActive={showFilterGenerations}
+            onClick={() => setShowFilterGenerations(!showFilterGenerations)}
+          >
+            Generation
+          </TabItem>
+        </TabList>
+        {showFilterTypes && (
+          <TabPanel>
+            {filterTypes.map((filterType) => (
+              <PokemonBadge
+                className={classNames(
+                  someOneTypeIsChecked &&
+                    (filterType.isChecked ? 'outline outline-2' : 'opacity-40')
+                )}
+                key={filterType.type}
+                type={filterType.type}
+                onClick={() => handleCheckPokemonType(filterType.type)}
+              />
+            ))}
+          </TabPanel>
+        )}
+        {showFilterGenerations && (
+          <TabPanel>
+            {filterGenerations.map((generation) => (
+              <PokemonBadge
+                className={classNames(
+                  someOneGenerationIsChecked &&
+                    (generation.isChecked ? 'outline outline-2' : 'opacity-40')
+                )}
+                key={generation.generation}
+                type={generation.generation}
+                onClick={() => handleCheckPokemonGeneration(generation.generation)}
+              />
+            ))}
+          </TabPanel>
+        )}
       </Card>
       <div className="grid grid-cols-12 gap-2 mb-9">
         {isLoading || handleChangeInputSearchPokemon.isPending()

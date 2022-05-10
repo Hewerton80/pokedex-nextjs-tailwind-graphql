@@ -5,7 +5,7 @@ import { IPokemon } from '../../../../types/Pokemon'
 import Text from '../../typography/Text'
 import Image from 'next/image'
 import { Fragment } from 'react'
-import PokemonTypeBadge from '../../dataDisplay/PokemonTypeBadge'
+import PokemonBadge from '../../dataDisplay/PokemonBadge'
 import ShimmerEffect from '../../feedback/ShimmerEffect'
 import { getRange } from '../../../../utils/getRange'
 interface PokemonCardProps extends CardProps {
@@ -36,7 +36,7 @@ export function PokemonCard({
           ? getRange(2).map((i) => <ShimmerEffect key={'poke-type' + i} />)
           : pokemon?.types?.map((t) => (
               <Fragment key={t.id}>
-                <PokemonTypeBadge type={t?.name} />
+                <PokemonBadge type={t?.name} />
               </Fragment>
             ))}
       </div>

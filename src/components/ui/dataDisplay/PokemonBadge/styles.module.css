@@ -6,7 +6,9 @@
   /* prettier-ignore */
   text-shadow: 0 1px 1px theme('colors.black')80;
 }
-
+.root {
+   background: theme("colors.generation");
+}
 .root.normal {
    background: theme("colors.normal");
 }

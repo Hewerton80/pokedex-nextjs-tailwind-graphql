@@ -17,11 +17,12 @@ export enum PokemonTypeNameEnum {
   dragon = 'dragon',
   dark = 'dark',
   fairy = 'fairy',
-  unknown = 'unknown',
-  shadow = 'shadow',
+  // unknown = 'unknown',
+  // shadow = 'shadow',
 }
 
+export type PokemonTypeName = keyof typeof PokemonTypeNameEnum
 export interface IPokemonType {
   id?: string
-  name?: keyof typeof PokemonTypeNameEnum
+  name?: PokemonTypeName
 }

@@ -1,4 +1,5 @@
 import { IPokemonAbility } from './PokemonAbility'
+import { IPokemonGeneration } from './PokemonGeneration'
 import { IPokemonType } from './PokemonType'
 
 export interface IPokemon {
@@ -6,4 +7,5 @@ export interface IPokemon {
   name?: string
   types?: IPokemonType[]
   abilities?: IPokemonAbility[]
+  generation?: IPokemonGeneration
 }

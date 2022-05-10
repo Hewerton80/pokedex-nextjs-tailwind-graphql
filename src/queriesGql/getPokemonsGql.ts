@@ -1,7 +1,13 @@
 import { gql } from '@apollo/client'
 import { IpokemonFilter } from '../hooks/usePokemon'
 
-export const getPokemonGql = ({ perPage, currentPage, name, type }: IpokemonFilter) => {
+export const getPokemonGql = ({
+  perPage,
+  currentPage,
+  name,
+  type,
+  generationName,
+}: IpokemonFilter) => {
   const gqlQueryOrder = `order_by: { id: asc }`
   const gqlQueryLimit = `limit: ${perPage}`
   const gqlQueryOffset = `offset: ${(Number(currentPage) - 1) * Number(perPage)}`
@@ -12,8 +18,12 @@ export const getPokemonGql = ({ perPage, currentPage, name, type }: IpokemonFilt
   const pokemonQueryName = `${name?.trim() ? `name: {_ilike: "%${name?.trim()}%"}` : ''}`
   const gqlQueryNameAndType = `pokemon_v2_pokemons: { ${pokemonQueryName} , ${gqlQueryType} }`
 
-  const gqlQueryWhere = `where: { ${gqlQueryNameAndType} }`
+  const queryPokemonGeneration = generationName
+    ? `pokemon_v2_generation: {name: {_eq: "${generationName}"}}`
+    : ''
+  const gqlQueryWhere = `where: { ${gqlQueryNameAndType}, ${queryPokemonGeneration} }`
   const gqlQuery = `${gqlQueryOrder},${gqlQueryLimit},${gqlQueryOffset},${gqlQueryWhere}`
+  console.log(queryPokemonGeneration)
   // console.log(gqlQueryWhere)
   // console.log(gqlQueryType)
   return gql`
@@ -30,7 +40,7 @@ export const getPokemonGql = ({ perPage, currentPage, name, type }: IpokemonFilt
           }
         }
       }
-      gen3_species_total: pokemon_v2_pokemonspecies_aggregate (${gqlQueryWhere}){
+      gen3_species_total: pokemon_v2_pokemonspecies_aggregate (${gqlQueryWhere}) {
         aggregate {
           count
         }

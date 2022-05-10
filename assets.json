@@ -45,7 +45,8 @@
     "dark": "linear-gradient(rgb(112, 112, 112) 50%, rgb(112, 112, 112) 50%)",
     "fairy": "linear-gradient(rgb(253, 185, 233) 50%, rgb(253, 185, 233) 50%)",
     "uncknow": "linear-gradient(rgb(204, 204, 204) 50%, rgb(204, 204, 204) 50%)",
-    "shadow": "linear-gradient(rgb(10, 13, 103) 50%, rgb(10, 13, 103) 50%)"
+    "shadow": "linear-gradient(rgb(10, 13, 103) 50%, rgb(10, 13, 103) 50%)",
+    "generation": "linear-gradient(#CB0B4F 50%, #CB0B4F 50%)"
   },
   "fontFamily": {
     "sans": "Roboto, Arial, sans-serif"
