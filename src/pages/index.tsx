@@ -16,6 +16,7 @@ import {
   PokemonGenerationName,
   PokemonGenerationNameEnum,
 } from '../types/PokemonGeneration'
+import Link from 'next/link'
 
 interface IFilterTypes {
   type: PokemonTypeName
@@ -84,10 +85,11 @@ const Home: NextPage = () => {
   useEffect(() => {
     if (router.isReady) {
       const { name, currentPage, type, generationName } = getPokemonssFilterFromRouter()
+      type && setShowFilterTypes(true)
+      generationName && setShowFilterGenerations(true)
       setInputSearchPokemonValue(name)
       setSeletedPokemonTypeFilter(type)
       setSeletedPokemonGenerationFilter(generationName)
-      console.log('generationName', generationName)
       getPokemons({ currentPage, name, type, generationName })
     }
   }, [router, getPokemons, getPokemonssFilterFromRouter])
@@ -205,7 +207,11 @@ const Home: NextPage = () => {
   const podekemonsListElement = useMemo(() => {
     return pokemons?.docs?.map((pokemon, i) => (
       <Fragment key={String(pokemon?.id) + i}>
-        <PokemonCard className="col-span-4" pokemon={pokemon} />
+        <Link href={`/pokemon/${pokemon?.id}`}>
+          <a className="col-span-4">
+            <PokemonCard pokemon={pokemon} />
+          </a>
+        </Link>
       </Fragment>
     ))
   }, [pokemons])

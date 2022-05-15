@@ -2,13 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-  @apply box-border;
-}
+
 @layer base {
+  * {
+    @apply box-border m-0 p-0;
+  }
   html,
   body {
-    @apply font-sans m-0 p-0 bg-body dark:bg-dark-body;
+    @apply font-sans bg-body dark:bg-dark-body;
   }
   body.hidden_scroll {
     @apply overflow-y-hidden;

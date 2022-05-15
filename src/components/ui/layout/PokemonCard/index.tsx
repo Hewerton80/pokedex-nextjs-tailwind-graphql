@@ -21,7 +21,10 @@ export function PokemonCard({
   ...rest
 }: PokemonCardProps) {
   return (
-    <Card className={cn(styles.root, className)} {...rest}>
+    <Card
+      className={cn(styles.root, 'hover:bg-light dark:hover:bg-muted', className)}
+      {...rest}
+    >
       {isLoading ? (
         <ShimmerEffect className="max-w-[150px]" />
       ) : (
