@@ -8,9 +8,15 @@ interface PokemonBadgeProps {
   className?: string
   type?: PokemonTypeName | PokemonGenerationName
   onClick?: Callback
+  size?: 'sm' | 'md' | 'lg'
 }
 
-function PokemonBadge({ type = 'normal', className, onClick }: PokemonBadgeProps) {
+function PokemonBadge({
+  type = 'normal',
+  className,
+  size = 'md',
+  onClick,
+}: PokemonBadgeProps) {
   return (
     <span
       onClick={onClick}
@@ -19,6 +25,7 @@ function PokemonBadge({ type = 'normal', className, onClick }: PokemonBadgeProps
         'outline-black dark:outline-white',
         styles.root,
         styles[type],
+        styles[size],
         className
       )}
     >

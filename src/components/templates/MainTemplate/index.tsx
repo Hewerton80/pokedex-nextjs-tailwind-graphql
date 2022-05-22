@@ -1,10 +1,13 @@
-import { HTMLAttributes, useContext } from 'react'
+import { HTMLAttributes, useEffect } from 'react'
 import cn from 'classnames'
 import Header from '../../common/Header'
 
 interface MainTemplateProps extends HTMLAttributes<HTMLDivElement> {}
 
 function MainTemplate({ children, ...rest }: MainTemplateProps) {
+  useEffect(() => {
+    console.log('MainTemplate Mounted')
+  }, [])
   return (
     <div
       className={cn(
@@ -17,7 +20,7 @@ function MainTemplate({ children, ...rest }: MainTemplateProps) {
     >
       <Header />
       <div
-        className={cn('flex', 'w-full h-full pt-[35px]', 'overflow-x-hidden')}
+        className={cn('flex', 'w-full h-full pt-[35px] px-8', 'overflow-x-hidden')}
         style={{
           minHeight: 'calc(100vh - 80px)',
         }}

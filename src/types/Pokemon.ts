@@ -1,5 +1,6 @@
 import { IPokemonAbility } from './PokemonAbility'
 import { IPokemonGeneration } from './PokemonGeneration'
+import { IPokemonStat } from './PokemonStat'
 import { IPokemonType } from './PokemonType'
 
 export interface IPokemon {
@@ -7,15 +8,19 @@ export interface IPokemon {
   name?: string
   base_happiness?: number
   capture_rate?: number
+  has_gender_differences?: boolean
+  is_baby?: boolean
+  base_experience?: number
   forms_switchable?: boolean
   gender_rate?: number
-  has_gender_differences?: boolean
   hatch_counter?: number
-  is_baby?: boolean
   is_legendary?: boolean
   is_mythical?: boolean
+  height?: number
+  weight?: number
   evelotionsChain?: IPokemon[]
   types?: IPokemonType[]
   abilities?: IPokemonAbility[]
   generation?: IPokemonGeneration
+  stats?: IPokemonStat[]
 }

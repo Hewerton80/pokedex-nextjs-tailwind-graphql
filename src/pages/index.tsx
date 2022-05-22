@@ -1,4 +1,3 @@
-import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { ChangeEvent, Fragment, useCallback, useEffect, useMemo, useState } from 'react'
 import PokemonBadge from '../components/ui/dataDisplay/PokemonBadge'
@@ -28,7 +27,7 @@ interface IFilterGenerations {
   isChecked: boolean
 }
 
-const Home: NextPage = () => {
+function Home() {
   const { pokemons, isLoading, getPokemons } = usePokemon()
 
   const router = useRouter()
@@ -71,7 +70,7 @@ const Home: NextPage = () => {
   }, [pokemons])
 
   const getPokemonssFilterFromRouter = useCallback(() => {
-    const { name, currentPage, type, generationName } = router.query as IpokemonFilter
+    const { name, currentPage, type, generationName }: IpokemonFilter = router.query
     return {
       name: name ? name.trim() : '',
       currentPage: currentPage ? Number(currentPage) : 1,
@@ -84,12 +83,14 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     if (router.isReady) {
+      // console.log('is ready')
       const { name, currentPage, type, generationName } = getPokemonssFilterFromRouter()
       type && setShowFilterTypes(true)
       generationName && setShowFilterGenerations(true)
       setInputSearchPokemonValue(name)
       setSeletedPokemonTypeFilter(type)
       setSeletedPokemonGenerationFilter(generationName)
+      setPage(currentPage)
       getPokemons({ currentPage, name, type, generationName })
     }
   }, [router, getPokemons, getPokemonssFilterFromRouter])
@@ -134,7 +135,10 @@ const Home: NextPage = () => {
   const handleChangePage = useCallback(
     (toPage: number) => {
       setPage(toPage)
-      router.push({ pathname: '/', query: { ...router.query, currentPage: toPage } })
+      router.push({
+        pathname: router.pathname,
+        query: { ...router.query, currentPage: toPage },
+      })
     },
     [router]
   )
@@ -150,7 +154,7 @@ const Home: NextPage = () => {
       }
       setPage(1)
       router.push({
-        pathname: '/',
+        pathname: router.pathname,
         query: { ...router.query, type: podekemonTypeTmp, currentPage: 1 },
       })
     },
@@ -168,7 +172,7 @@ const Home: NextPage = () => {
       }
       setPage(1)
       router.push({
-        pathname: '/',
+        pathname: router.pathname,
         query: {
           ...router.query,
           generationName: podekemonGenerationTmp,
@@ -185,7 +189,7 @@ const Home: NextPage = () => {
         setInputSearchPokemonValue(e.target.value)
         setPage(1)
         router.push({
-          pathname: '/',
+          pathname: router.pathname,
           query: { ...router.query, name: e.target.value, currentPage: 1 },
         })
       },
@@ -282,16 +286,14 @@ const Home: NextPage = () => {
           : podekemonsListElement}
       </div>
       <div className="flex w-full">
-        {
-          <PaginationBar
-            currentPage={page}
-            onChangePage={handleChangePage}
-            perPage={docsPerPage}
-            totalPages={totalPages}
-            totalRecords={totalDocs}
-            disabled={isLoading || handleChangeInputSearchPokemon.isPending()}
-          />
-        }
+        <PaginationBar
+          currentPage={page}
+          onChangePage={handleChangePage}
+          perPage={docsPerPage}
+          totalPages={totalPages}
+          totalRecords={totalDocs}
+          disabled={isLoading || handleChangeInputSearchPokemon.isPending()}
+        />
       </div>
     </div>
   )

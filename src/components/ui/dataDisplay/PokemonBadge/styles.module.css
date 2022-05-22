@@ -1,7 +1,6 @@
 .root {
-  @apply flex items-center justify-center w-fit  py-1.5 px-2
-  border-0 border-transparent rounded-[3px] first-letter:uppercase
-  text-xs text-white font-bold cursor-pointer;
+  @apply flex items-center justify-center w-fit  border-0 border-transparent 
+  rounded-[3px] first-letter:uppercase text-white font-bold cursor-pointer;
   
   /* prettier-ignore */
   text-shadow: 0 1px 1px theme('colors.black')80;
@@ -68,4 +67,11 @@
 }
 .root.shadow {
    background: theme("colors.shadow");
+}
+
+.root.md {
+   @apply text-xs py-1.5 px-2.5;
+}
+.root.lg {
+   @apply text-lg py-1.5 px-8;
 }
