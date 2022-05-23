@@ -14,7 +14,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       const { data, error } = await apolloClient.query({
         query: getPokemonGql({ perPage, currentPage, ...restArgs }),
       })
-      console.log('-----------')
       if (!error) {
         let pokemonsTmp: IPokemon[] = []
         pokemonsTmp = data.species?.map((poke: any) => {
@@ -34,14 +33,14 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           perPage,
           totalDocs,
         })
-        res.status(200).json(pokemonRecordsTmp)
+        return res.status(200).json(pokemonRecordsTmp)
       }
     } catch (err) {
       console.log(err)
-      res.status(500).json(JSON.stringify(err))
+      return res.status(500).json(JSON.stringify(err))
     }
   }
   {
-    res.status(400).json({ msg: 'page not found' })
+    return res.status(400).json({ msg: 'page not found' })
   }
 }

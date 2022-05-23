@@ -65,14 +65,14 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           stats,
           evelotionsChain: evolutionchainEspeciesTmp,
         }
-        res.status(200).json(pokemonRecordsTmp)
+        return res.status(200).json(pokemonRecordsTmp)
       }
     } catch (err) {
       console.log(err)
-      res.status(500).json(JSON.stringify(err))
+      return res.status(500).json(JSON.stringify(err))
     }
   }
   {
-    res.status(400).json({ msg: 'page not found' })
+    return res.status(400).json({ msg: 'page not found' })
   }
 }

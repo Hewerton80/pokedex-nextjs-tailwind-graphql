@@ -16,6 +16,7 @@ import {
   PokemonGenerationNameEnum,
 } from '../types/PokemonGeneration'
 import Link from 'next/link'
+import { useLayoutEffect } from 'react'
 
 interface IFilterTypes {
   type: PokemonTypeName
