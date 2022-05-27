@@ -24,12 +24,6 @@ function PokemonPage() {
     }
   }, [pokemonId, getPokemonById])
 
-  useEffect(() => {
-    if (router.isReady) {
-      console.log('is ready')
-    }
-  }, [router])
-
   return (
     <div className="flex flex-col max-w-4xl w-full mx-auto mb-9">
       <div className="flex justify-center items-center w-full mb-4">

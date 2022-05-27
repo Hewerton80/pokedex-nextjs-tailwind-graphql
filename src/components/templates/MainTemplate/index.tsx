@@ -1,13 +1,10 @@
-import { HTMLAttributes, useEffect } from 'react'
+import { HTMLAttributes } from 'react'
 import cn from 'classnames'
 import Header from '../../common/Header'
 
 interface MainTemplateProps extends HTMLAttributes<HTMLDivElement> {}
 
 function MainTemplate({ children, ...rest }: MainTemplateProps) {
-  useEffect(() => {
-    console.log('MainTemplate Mounted')
-  }, [])
   return (
     <div
       className={cn(

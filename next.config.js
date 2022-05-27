@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
   webpack5: true,
-  reactStrictMode: true,
+  // reactStrictMode: true,
   pageExtensions: ['tsx'],
   async redirects() {
     return [
