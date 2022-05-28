@@ -83,6 +83,10 @@ function Home() {
   }, [router])
 
   useEffect(() => {
+    console.log('mounted')
+  }, [])
+
+  useEffect(() => {
     if (router.isReady) {
       // console.log('is ready')
       const { name, currentPage, type, generationName } = getPokemonssFilterFromRouter()

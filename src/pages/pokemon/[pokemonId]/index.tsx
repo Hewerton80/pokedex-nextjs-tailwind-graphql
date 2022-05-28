@@ -28,12 +28,6 @@ function PokemonPage() {
     }
   }, [pokemonId, getPokemonById])
 
-  useEffect(() => {
-    if (router.isReady) {
-      console.log('is ready')
-    }
-  }, [router])
-
   if (isLoading || !pokemon?.id) {
     return (
       <span className="mx-auto">
