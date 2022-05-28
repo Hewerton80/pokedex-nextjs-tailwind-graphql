@@ -1,6 +1,6 @@
 .root {
   @apply flex items-center justify-center w-fit  border-0 border-transparent 
-  rounded-[3px] first-letter:uppercase text-white font-bold cursor-pointer;
+  rounded-[3px] first-letter:uppercase text-white font-bold;
   
   /* prettier-ignore */
   text-shadow: 0 1px 1px theme('colors.black')80;

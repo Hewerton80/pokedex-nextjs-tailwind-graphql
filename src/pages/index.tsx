@@ -213,7 +213,7 @@ function Home() {
     return pokemons?.docs?.map((pokemon, i) => (
       <Fragment key={String(pokemon?.id) + i}>
         <Link href={`/pokemon/${pokemon?.id}`}>
-          <a className="col-span-4">
+          <a className="col-span-12 sm:col-span-6 md:col-span-4">
             <PokemonCard pokemon={pokemon} />
           </a>
         </Link>
@@ -251,6 +251,7 @@ function Home() {
             {filterTypes.map((filterType) => (
               <PokemonBadge
                 className={classNames(
+                  'cursor-pointer',
                   someOneTypeIsChecked &&
                     (filterType.isChecked ? 'outline outline-2' : 'opacity-40')
                 )}
@@ -266,6 +267,7 @@ function Home() {
             {filterGenerations.map((generation) => (
               <PokemonBadge
                 className={classNames(
+                  'cursor-pointer',
                   someOneGenerationIsChecked &&
                     (generation.isChecked ? 'outline outline-2' : 'opacity-40')
                 )}
@@ -281,7 +283,10 @@ function Home() {
         {isLoading || handleChangeInputSearchPokemon.isPending()
           ? getRange(48).map((i) => (
               <Fragment key={'is-loading' + i}>
-                <PokemonCard className="col-span-4" isLoading />
+                <PokemonCard
+                  className="col-span-12 sm:col-span-6 md:col-span-4"
+                  isLoading
+                />
               </Fragment>
             ))
           : podekemonsListElement}

@@ -60,6 +60,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           name: specie?.name,
           base_experience: pokemonTmp?.base_experience,
           height: pokemonTmp?.height,
+          weight: pokemonTmp?.weight,
           types,
           abilities,
           stats,

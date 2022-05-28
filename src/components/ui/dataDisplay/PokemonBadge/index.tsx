@@ -19,7 +19,6 @@ function PokemonBadge({
 }: PokemonBadgeProps) {
   return (
     <span
-      onClick={onClick}
       className={cn(
         'pokemon-badge',
         'outline-black dark:outline-white',
@@ -28,6 +27,7 @@ function PokemonBadge({
         styles[size],
         className
       )}
+      onClick={onClick}
     >
       {type}
     </span>

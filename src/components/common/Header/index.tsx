@@ -2,10 +2,13 @@ import { HTMLAttributes, useEffect, useState } from 'react'
 import cn from 'classnames'
 import styles from './styles.module.css'
 import ThemeSwitch from '../../ui/forms/ThemeSwitch'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 interface HeaderProps extends HTMLAttributes<HTMLElement> {}
 
 function Header({ className, ...rest }: HeaderProps) {
+  const router = useRouter()
   const [theme, setTheme] = useState<'light' | 'dark'>('light')
 
   useEffect(() => {
@@ -35,7 +38,11 @@ function Header({ className, ...rest }: HeaderProps) {
     >
       <div className={styles.header_inner}>
         <div className={styles.header_left}>
-          <h2>Pokedex</h2>
+          <Link href={{ pathname: '/', query: router.query }}>
+            <a>
+              <h2>Pokedex</h2>
+            </a>
+          </Link>
         </div>
         <div className={styles.header_right}>
           <ThemeSwitch

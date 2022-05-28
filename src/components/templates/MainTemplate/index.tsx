@@ -20,12 +20,12 @@ function MainTemplate({ children, ...rest }: MainTemplateProps) {
     >
       <Header />
       <div
-        className={cn('flex', 'w-full h-full pt-[35px] px-8', 'overflow-x-hidden')}
+        className={cn('flex', 'w-full h-full pt-[35px] px-6', 'overflow-x-hidden')}
         style={{
           minHeight: 'calc(100vh - 80px)',
         }}
       >
-        <div className="flex flex-col flex-1 px-7">{children}</div>
+        <div className="flex flex-col flex-1">{children}</div>
       </div>
     </div>
   )
