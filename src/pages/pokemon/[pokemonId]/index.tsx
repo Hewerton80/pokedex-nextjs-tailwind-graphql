@@ -127,15 +127,15 @@ function PokemonPage() {
             </div>
           </CardBody>
         </Card>
-        {pokemon?.evelotionsChain?.length! > 1 && (
+        {pokemon?.evolutionsChain?.length! > 1 && (
           <Card className="col-span-12">
             <CardHeader>
               <CardTitle>Evolução</CardTitle>
             </CardHeader>
             <CardBody>
-              <div className="flex justify-center">
-                {pokemon?.evelotionsChain?.map((pokeEvolutions, i) => {
-                  const isLessThanLength = i < pokemon?.evelotionsChain?.length! - 1
+              <div className="flex justify-center flex-wrap">
+                {pokemon?.evolutionsChain?.map((pokeEvolutions, i) => {
+                  const isLessThanLength = i < pokemon?.evolutionsChain?.length! - 1
                   return (
                     <Fragment key={i + 'chain'}>
                       <div className="flex flex-col justify-center">
@@ -161,7 +161,7 @@ function PokemonPage() {
                         </Text>
                       </div>
                       {isLessThanLength && (
-                        <div className="flex items-center h-full mx-0 sm:mx-8">
+                        <div className="flex items-center h-full mx-0 sm:mx-8 my-auto">
                           <TiArrowRightOutline
                             size={32}
                             color={assets.colors['blue-typography']}

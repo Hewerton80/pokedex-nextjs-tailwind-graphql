@@ -1,5 +1,5 @@
 .card {
-  @apply flex flex-col bg-white relative;
+  @apply flex flex-col bg-white relative h-fit;
   /* prettier-ignore */
   box-shadow: 0 1px 5px theme('colors.black')10;
 }

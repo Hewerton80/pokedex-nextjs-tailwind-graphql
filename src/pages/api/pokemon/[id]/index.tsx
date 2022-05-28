@@ -64,7 +64,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           types,
           abilities,
           stats,
-          evelotionsChain: evolutionchainEspeciesTmp,
+          evolutionsChain: evolutionchainEspeciesTmp,
         }
         return res.status(200).json(pokemonRecordsTmp)
       }

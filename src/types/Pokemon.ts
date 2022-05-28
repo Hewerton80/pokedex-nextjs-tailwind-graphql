@@ -18,7 +18,7 @@ export interface IPokemon {
   is_mythical?: boolean
   height?: number
   weight?: number
-  evelotionsChain?: IPokemon[]
+  evolutionsChain?: IPokemon[]
   types?: IPokemonType[]
   abilities?: IPokemonAbility[]
   generation?: IPokemonGeneration
