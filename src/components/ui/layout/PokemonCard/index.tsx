@@ -4,7 +4,7 @@ import { Card, CardProps } from '../Card'
 import { IPokemon } from '../../../../types/Pokemon'
 import Text from '../../typography/Text'
 import Image from 'next/image'
-import { Fragment } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import PokemonBadge from '../../dataDisplay/PokemonBadge'
 import ShimmerEffect from '../../feedback/ShimmerEffect'
 import { getRange } from '../../../../utils/getRange'
@@ -20,6 +20,15 @@ export function PokemonCard({
   isLoading,
   ...rest
 }: PokemonCardProps) {
+  const [imgSrc, setImgSrc] = useState('')
+
+  useEffect(() => {
+    if (pokemon?.id) {
+      setImgSrc(
+        `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${pokemon?.id}.gif`
+      )
+    }
+  }, [pokemon])
   return (
     <Card
       className={cn(styles.root, 'hover:bg-light dark:hover:bg-muted', className)}
@@ -47,13 +56,22 @@ export function PokemonCard({
         {isLoading ? (
           <ShimmerEffect />
         ) : (
-          <Image
-            src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon?.id}.png`}
-            alt={pokemon?.name}
-            width={112}
-            height={112}
-            objectFit="cover"
-          />
+          imgSrc && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              // src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon?.id}.png`}
+              src={imgSrc}
+              alt={pokemon?.name}
+              width={50}
+              height={46}
+              loading="lazy"
+              onError={() =>
+                setImgSrc(
+                  `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon?.id}.png`
+                )
+              }
+            />
+          )
         )}
       </span>
     </Card>

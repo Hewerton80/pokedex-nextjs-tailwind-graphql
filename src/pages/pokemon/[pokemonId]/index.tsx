@@ -1,7 +1,7 @@
 import classNames from 'classnames'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { Fragment, useEffect, useMemo } from 'react'
+import { Fragment, useEffect, useMemo, useState } from 'react'
 import PokemonBadge from '../../../components/ui/dataDisplay/PokemonBadge'
 import { Card, CardBody, CardHeader, CardTitle } from '../../../components/ui/layout/Card'
 import Text from '../../../components/ui/typography/Text'
@@ -17,6 +17,8 @@ function PokemonPage() {
 
   const { pokemon, isLoading, getPokemonById } = usePokemon()
 
+  const [imgSrc, setImgSrc] = useState('')
+
   const pokemonId = useMemo(
     () => (router.query?.pokemonId ? String(router.query?.pokemonId) : undefined),
     [router]
@@ -27,6 +29,14 @@ function PokemonPage() {
       getPokemonById(pokemonId)
     }
   }, [pokemonId, getPokemonById])
+
+  useEffect(() => {
+    if (pokemon?.id) {
+      setImgSrc(
+        `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${pokemon?.id}.gif`
+      )
+    }
+  }, [pokemon])
 
   if (isLoading || !pokemon?.id) {
     return (
@@ -43,9 +53,14 @@ function PokemonPage() {
         <img
           className="max-w-[112px] w-full object-cover"
           // src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokemon?.id}.svg`}
-          src={`https://assets.pokemon.com/assets/cms2/img/pokedex/full/${String(
-            pokemon?.id
-          )?.padStart(3, '0')}.png`}
+          src={imgSrc}
+          onError={() =>
+            setImgSrc(
+              `https://assets.pokemon.com/assets/cms2/img/pokedex/full/${String(
+                pokemon?.id
+              )?.padStart(3, '0')}.png`
+            )
+          }
           alt={pokemon?.name}
         />
         <div

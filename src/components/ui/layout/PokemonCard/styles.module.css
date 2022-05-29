@@ -11,7 +11,10 @@
 }
 
 .root .img-wrapper {
-  @apply flex w-28 h-28 absolute right-0  top-0;
+  @apply flex w-[80px] absolute right-2  top-1/2 -translate-y-1/2;
+}
+.root .img-wrapper img {
+  @apply w-full ;
 }
 .root .img-wrapper :global(.shimmer) {
   @apply w-16 h-16  m-auto;
