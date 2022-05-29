@@ -1,11 +1,13 @@
-<!-- This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## About 📄
 
-Free Resources for Generating Realistic Fake Data. <a href="https://fake-generator.vercel.app/" target="_blank" rel="noopener noreferrer">See demo</a>
+Pokedex, <a href="https://pokedex-nextjs-tailwind-graphql.vercel.app/" target="_blank" rel="noopener noreferrer">See demo</a> .
 
 <p align="center">
-  <img src='https://user-images.githubusercontent.com/37268237/164992509-31355991-af5c-4306-afdb-6b697e035019.gif'/>
+
+![2022-05-28 19-19-20 (1)](https://user-images.githubusercontent.com/37268237/170846170-71bad836-0062-45ce-b148-c220c0632e1e.gif)
+
 </p>
 
 ## Technologies 💻
@@ -41,4 +43,3 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
     </td>
   </tr>
 </table>
- -->
